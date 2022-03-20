@@ -55,7 +55,7 @@ function Patients() {
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [address, setAddress] = useState("");
-  const [telephone, setTelephone] = useState(0);
+  const [telephone, setTelephone] = useState("");
   const [age, setAge] = useState(0);
   const [occupation, setOccupation] = useState("");
   const [status, setStatus] = useState("");
@@ -86,7 +86,7 @@ function Patients() {
       .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
       .join(" ");
   };
-
+  console.log(telephone);
   //check if number is already exist
   const checkNumber = patients?.some((val) => val.telephone === telephone);
 
@@ -106,7 +106,7 @@ function Patients() {
       last_name: capitalize(lastName),
       middle_name: capitalize(middleName),
       address: capitalize(address),
-      telephone: telephone,
+      telephone: telephone.toString(),
       age: age,
       occupation: capitalize(occupation),
       status: status,
@@ -134,11 +134,6 @@ function Patients() {
     } else if (checkNumber) {
       swal("Error", "This number is Already Exist", "warning");
     } else if (checkFullName) {
-      // swal("Error", "This full name is already exist", "warning").then(
-      //   setTimeout(() => {
-      //     window.location.reload(false);
-      //   }, 1300)
-      // );
       setOpenSureModal(true);
     } else {
       axios
@@ -446,7 +441,7 @@ function Patients() {
                             variant="contained"
                             color="success"
                             className="patients__button"
-                            onClick={() => navigate(`/view-patient/:${val.id}`)}
+                            onClick={() => navigate(`/view-patient/${val.id}`)}
                           >
                             View
                           </Button>{" "}

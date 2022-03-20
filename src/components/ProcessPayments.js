@@ -21,6 +21,7 @@ import { selectUser } from "../features/userSlice";
 
 function ProcessPayments() {
   const user = useSelector(selectUser);
+  const [processBy, setProcessBy] = useState(user.email);
   const todaysDate = new Date();
   let navigate = useNavigate();
   const DateToday = () => {
@@ -139,6 +140,7 @@ function ProcessPayments() {
         amount: automaticAmount(discount),
         payment: payment,
         balance: automaticBalance(amount, payment, discount),
+        process_by: processBy,
       };
 
       axios
@@ -247,7 +249,7 @@ function ProcessPayments() {
             />
           </FormControl>
         </Grid>
-        <Grid item md={12} xs={12}>
+        <Grid item md={6} xs={12}>
           <FormControl className="patients__info">
             <TextField
               id="outlined-basic"
@@ -258,6 +260,19 @@ function ProcessPayments() {
               value={automaticBalance(amount, payment, discount)}
               required
               helperText="Balance"
+            />
+          </FormControl>
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <FormControl className="patients__info">
+            <TextField
+              id="outlined-basic"
+              variant="outlined"
+              type="text"
+              className="patients__info"
+              value={processBy}
+              disabled={true}
+              helperText="Process By"
             />
           </FormControl>
         </Grid>
