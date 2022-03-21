@@ -21,7 +21,7 @@ import { selectUser } from "../features/userSlice";
 
 function ProcessPayments() {
   const user = useSelector(selectUser);
-  const [processBy, setProcessBy] = useState(user.email);
+  const [processBy, setProcessBy] = useState(user?.email);
   const todaysDate = new Date();
   let navigate = useNavigate();
   const DateToday = () => {
@@ -111,12 +111,10 @@ function ProcessPayments() {
   };
 
   const automaticBalance = (amount, payment, discount) => {
-    return amount - payment - discount;
+    return parseInt(amount - payment - discount);
   };
 
-  const [balance, setBalance] = useState(
-    automaticBalance(amount, payment, discount)
-  );
+  const [balance, setBalance] = useState(0);
 
   const handleProcessPayment = (e) => {
     e.preventDefault();
@@ -131,31 +129,65 @@ function ProcessPayments() {
     if (patient === "" || description === "" || amount === 0) {
       swal("Error", "Fill all the fields", "warning");
     } else {
-      const form = {
-        patient: patient,
-        description: description,
-        date: dateToday,
-        check_number: checkNumber,
-        discount: discount,
-        amount: automaticAmount(discount),
-        payment: payment,
-        balance: automaticBalance(amount, payment, discount),
-        process_by: processBy,
-      };
-
-      axios
-        .post("/api/payments/", form, {
-          headers: {
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        })
-        .then((res) => {
-          swal("Success", `Process Payment Successful`, "success").then(
-            setTimeout(() => {
-              navigate(`/patients`);
-            }, 1000)
-          );
-        });
+      if (automaticBalance(amount, payment, discount) === 0) {
+        axios
+          .post(
+            "/api/payments/",
+            {
+              patient: patient,
+              description: description,
+              date: dateToday,
+              check_number: checkNumber,
+              discount: discount,
+              amount: automaticAmount(discount),
+              payment: payment,
+              balance: automaticBalance(amount, payment, discount),
+              process_by: user?.email,
+              is_paid_within_the_day: true,
+            },
+            {
+              headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((res) => {
+            swal("Success", `Process Payment Successful`, "success").then(
+              setTimeout(() => {
+                navigate(`/patients`);
+              }, 1000)
+            );
+          });
+      } else {
+        axios
+          .post(
+            "/api/payments/",
+            {
+              patient: patient,
+              description: description,
+              date: dateToday,
+              check_number: checkNumber,
+              discount: discount,
+              amount: automaticAmount(discount),
+              payment: payment,
+              balance: automaticBalance(amount, payment, discount),
+              process_by: user?.email,
+              is_paid_within_the_day: false,
+            },
+            {
+              headers: {
+                Authorization: `Token ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((res) => {
+            swal("Success", `Process Payment Successful`, "success").then(
+              setTimeout(() => {
+                navigate(`/patients`);
+              }, 1000)
+            );
+          });
+      }
     }
   };
 
@@ -270,7 +302,7 @@ function ProcessPayments() {
               variant="outlined"
               type="text"
               className="patients__info"
-              value={processBy}
+              value={user?.email}
               disabled={true}
               helperText="Process By"
             />

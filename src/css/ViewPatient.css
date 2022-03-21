@@ -26,3 +26,7 @@
 .viewPatient__dateField {
   width: fit-content !important;
 }
+
+.viewPatient__breakdownText {
+  text-align: center !important;
+}
