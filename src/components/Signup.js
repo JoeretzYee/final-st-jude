@@ -24,24 +24,26 @@ function Signup() {
     e.preventDefault();
 
     if (password.length < 8 || confirmPassword < 8) {
-      setError("Password must atleast 8 characters");
+      swal("Error", "Password must atleast 8 characters");
     } else if (
       firstName === "" ||
+      middleName === "" ||
       lastName === "" ||
       email === "" ||
       password === "" ||
       confirmPassword === ""
     ) {
-      setError("Fill all the fields");
+      swal("Error", "Fill all the fields");
     } else if (password !== confirmPassword) {
-      setError("Password does not match");
+      swal("Error", "Password does not match");
     } else if (!pattern.test(email)) {
-      setError("Invalid Email");
+      swal("Error", "Invalid Email");
     } else {
       axios
         .post("/auth/register", {
           first_name: firstName,
           last_name: lastName,
+          middle_name: middleName,
           email: email,
           password: password,
           re_password: confirmPassword,

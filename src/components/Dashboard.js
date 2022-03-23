@@ -217,16 +217,21 @@ const Dashboard = (props) => {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link to="/sales" className="dashboard__links">
-            <ListItem disablePadding className="dashboard__listItem">
-              <ListItemButton>
-                <ListItemIcon>
-                  <AttachMoneyIcon className="dashboard__icons" />
-                </ListItemIcon>
-                <ListItemText primary="Sales" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          {user?.is_superuser ? (
+            <Link to="/sales" className="dashboard__links">
+              <ListItem disablePadding className="dashboard__listItem">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <AttachMoneyIcon className="dashboard__icons" />
+                  </ListItemIcon>
+                  <ListItemText primary="Sales" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          ) : (
+            ""
+          )}
+
           <Link to="/generate-letter" className="dashboard__links">
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
@@ -237,16 +242,20 @@ const Dashboard = (props) => {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link to="/create-secretary-account" className="dashboard__links">
-            <ListItem disablePadding className="dashboard__listItem">
-              <ListItemButton>
-                <ListItemIcon>
-                  <AddIcon className="dashboard__icons" />
-                </ListItemIcon>
-                <ListItemText primary="Create Secretary Account" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          {user?.is_superuser ? (
+            <Link to="/create-secretary-account" className="dashboard__links">
+              <ListItem disablePadding className="dashboard__listItem">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <AddIcon className="dashboard__icons" />
+                  </ListItemIcon>
+                  <ListItemText primary="Create Secretary Account" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          ) : (
+            ""
+          )}
 
           <ListItem disablePadding className="dashboard__logoutButton">
             <ListItemButton onClick={handleLogout}>

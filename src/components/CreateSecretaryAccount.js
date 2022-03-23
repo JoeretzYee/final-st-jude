@@ -154,6 +154,7 @@ function CreateSecretaryAccount() {
         .post("/auth/register", {
           first_name: firstName,
           last_name: lastName,
+          middle_name: middleName,
           email: email,
           password: password,
           re_password: confirmPassword,
@@ -220,45 +221,52 @@ function CreateSecretaryAccount() {
       });
   };
 
-  let secretaryAccountsOptions = filterAccounts2()?.map((acc) => ({
+  let secretaryAccountsOptions = filterAccounts()?.map((acc) => ({
     value: acc.id,
     label: acc.email,
   }));
 
   const setToAdmin = (id) => {
     if (id) {
-      axios.get(`/auth/users/${id}/`).then((res) => {
-        setDataEmail(res.data.email);
-        setDataFirstName(res.data.first_name);
-        setDataLastName(res.data.last_name);
-        setDataPassword(res.data.password);
-        axios
-          .put(
-            `/auth/users/${id}/`,
-            {
-              is_secretary: false,
-              email: dataEmail,
-              first_name: dataFirstName,
-              last_name: dataLastName,
-              password: dataPassword,
-            },
-            {
-              headers: {
-                Authorization: `Token ${localStorage.getItem("token")}`,
+      axios
+        .get(`/auth/users/${id}/`, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          setDataEmail(res.data.email);
+          setDataFirstName(res.data.first_name);
+          setDataLastName(res.data.last_name);
+          setDataPassword(res.data.password);
+          axios
+            .put(
+              `/auth/users/${id}/`,
+              {
+                is_secretary: false,
+                is_superuser: true,
+                email: dataEmail,
+                first_name: dataFirstName,
+                last_name: dataLastName,
+                password: dataPassword,
               },
-            }
-          )
-          .then((res) => {
-            swal("Success", `Change to Admin Successful`, "success").then(
-              setTimeout(() => {
-                window.location.reload(false);
-              }, 1300)
-            );
-          })
-          .catch((error) => {
-            console.log("error in set it to admin: ", error);
-          });
-      });
+              {
+                headers: {
+                  Authorization: `Token ${localStorage.getItem("token")}`,
+                },
+              }
+            )
+            .then((res) => {
+              swal("Success", `Change to Admin Successful`, "success").then(
+                setTimeout(() => {
+                  window.location.reload(false);
+                }, 1300)
+              );
+            })
+            .catch((error) => {
+              console.log("error in set it to admin: ", error);
+            });
+        });
     }
   };
   return (
