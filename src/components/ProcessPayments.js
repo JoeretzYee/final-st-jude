@@ -155,7 +155,7 @@ function ProcessPayments() {
             swal("Success", `Process Payment Successful`, "success").then(
               setTimeout(() => {
                 navigate(`/patients`);
-              }, 1000)
+              }, 500)
             );
           });
       } else {
@@ -184,7 +184,7 @@ function ProcessPayments() {
             swal("Success", `Process Payment Successful`, "success").then(
               setTimeout(() => {
                 navigate(`/patients`);
-              }, 1000)
+              }, 500)
             );
           });
       }
@@ -218,7 +218,7 @@ function ProcessPayments() {
         <Grid item md={6} xs={12}>
           <FormControl className="patients__info">
             <Select
-              label="Select Patients"
+              label="Select Description"
               options={treatmentsOptions}
               onChange={(e) => setDescription(e.value)}
             />

@@ -146,7 +146,7 @@ function Patients() {
           swal("Success", `Patient Added Successful`, "success").then(
             setTimeout(() => {
               window.location.reload(false);
-            }, 1300)
+            }, 1000)
           );
           setFirstName("");
           setLastName("");

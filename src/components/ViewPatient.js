@@ -96,7 +96,9 @@ const style2 = {
 
 function ViewPatient() {
   let { patientId } = useParams();
+  const todaysDate = new Date();
   const user = useSelector(selectUser);
+  // patients info
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
@@ -107,13 +109,15 @@ function ViewPatient() {
   const [status, setStatus] = useState("");
   const [complaint, setComplaint] = useState("");
   const [transactions, setTransactions] = useState([]);
-  const [searchDate, setSearchDate] = useState("");
+
   const [balance, setBalance] = useState(0);
   const [balanceId, setBalanceId] = useState(null);
   const [checkNumber, setCheckNumber] = useState("");
   const [amount, setAmount] = useState(0);
   const [datePaid, setDatePaid] = useState("");
+  const [breakdowns, setBreakdowns] = useState([]);
   const [breakdowns1, setBreakdowns1] = useState(null);
+  const [breakdowns2, setBreakdowns2] = useState([]);
   const [filterBreakdowns, setFilterBreakdowns] = useState([]);
   //modal for updating balance
   const [open, setOpen] = useState(false);
@@ -123,16 +127,35 @@ function ViewPatient() {
   const [breakdownOpen, setBreakdownOpen] = useState(false);
   const handleBreakdownOpen = () => setBreakdownOpen(true);
   const handleBreakdownClose = () => setBreakdownOpen(false);
+
+  //modal to show up breakdown 2
+  const [breakdown2Open, setBreakdown2Open] = useState(false);
+  const handleBreakdown2Open = () => setBreakdown2Open(true);
+  const handleBreakdown2Close = () => setBreakdown2Open(false);
   // details
   const [dateAdded, setDateAdded] = useState("");
   const [detailsDescription, setDetailsDescription] = useState("");
   const [detailsCheckNumber, setDetailsCheckNumber] = useState("");
   const [detailsAmount, setDetailsAmount] = useState("");
 
+  const DateToday = () => {
+    let d = new Date(todaysDate);
+    let month = "" + (d.getMonth() + 1);
+    let day = "" + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = "0" + month;
+    }
+    if (day.length < 2) {
+      day = "0" + day;
+    }
+    return [year, month, day].join("-");
+  };
+  const [searchDate, setSearchDate] = useState(null);
+
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-
-  console.log("filter breakdowns2: ", filterBreakdowns);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -175,22 +198,16 @@ function ViewPatient() {
         setTransactions(res.data);
       });
 
-    // axios
-    //   .get("/api/breakdowns", {
-    //     headers: {
-    //       Authorization: `Token ${localStorage.getItem("token")}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setBreakdowns(res.data);
-    //   });
+    axios
+      .get("/api/breakdowns", {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        setBreakdowns(res.data);
+      });
   }, [patientId]);
-
-  // const filteredBreakdowns = (id) => {
-  //   return breakdowns?.filter((val) => {
-  //     setFilterBreakdowns(val.process_payments.id === id);
-  //   });
-  // };
 
   const filterTransactions = () => {
     return transactions.filter((val) => {
@@ -269,14 +286,19 @@ function ViewPatient() {
           },
         })
         .then((res) => {
-          // setDateAdded(res.data.date);
-          // setDetailsDescription(res.data.description.name);
-          // setDetailsCheckNumber(res.data.check_number);
-          // setDetailsAmount(res.data.amount);
-
           setBreakdowns1(res.data);
           setBreakdownOpen(true);
         });
+    }
+  };
+
+  const handleShowBreakdown2 = (id) => {
+    if (id) {
+      let sameProcessId = breakdowns.filter((val) => {
+        return val.process_payments.id === id;
+      });
+      setBreakdowns2(sameProcessId);
+      setBreakdown2Open(true);
     }
   };
 
@@ -361,7 +383,7 @@ function ViewPatient() {
       </Modal>
       {/* End of Modal */}
 
-      {/* Modal to show breakdown */}
+      {/* Modal to show breakdown1 */}
       <Modal
         open={breakdownOpen}
         onClose={handleBreakdownClose}
@@ -400,11 +422,18 @@ function ViewPatient() {
                       >
                         Amount
                       </TableCell>
+                      <TableCell
+                        align="center"
+                        className="viewPatient__tableCell"
+                      >
+                        Payment
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     <TableRow
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      key={breakdowns1?.id}
                     >
                       <TableCell component="th" scope="row">
                         {breakdowns1?.date}
@@ -421,6 +450,9 @@ function ViewPatient() {
                       </TableCell>
                       <TableCell align="center">
                         {breakdowns1?.amount}
+                      </TableCell>
+                      <TableCell align="center">
+                        {breakdowns1?.payment}
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -461,6 +493,7 @@ function ViewPatient() {
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
+                      key={breakdowns1?.id}
                     >
                       <TableCell component="th" scope="row">
                         {breakdowns1?.date}
@@ -477,7 +510,137 @@ function ViewPatient() {
                         {breakdowns1?.process_by}
                       </TableCell>
                     </TableRow>
-                    ;
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
+      {/* End of Modal */}
+      {/* -------------- */}
+      {/* Modal to show breakdown2 */}
+      <Modal
+        open={breakdown2Open}
+        onClose={handleBreakdown2Close}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style2} className="patients__box">
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Details
+          </Typography>
+          <br />
+          <Grid container spacing={2}>
+            <Grid item md={12} lg={12} xs={12}>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }}>
+                  <TableHead className="viewPatient__tableHead">
+                    <TableRow>
+                      <TableCell className="viewPatient__tableCell">
+                        Date Added
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className="viewPatient__tableCell"
+                      >
+                        Description
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className="viewPatient__tableCell"
+                      >
+                        Check Number
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className="viewPatient__tableCell"
+                      >
+                        Amount
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className="viewPatient__tableCell"
+                      >
+                        Payment
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell align="center">
+                        {breakdowns2[0]?.process_payments.date}
+                      </TableCell>
+                      <TableCell align="center">
+                        {breakdowns2[0]?.process_payments.description.name}
+                      </TableCell>
+                      <TableCell align="center">
+                        {breakdowns2[0]?.process_payments.check_number
+                          ? breakdowns2[0]?.process_payments.check_number
+                          : "N/A"}
+                      </TableCell>
+                      <TableCell align="center">
+                        {breakdowns2[0]?.process_payments.amount}
+                      </TableCell>
+                      <TableCell align="center">
+                        {breakdowns2[0]?.process_payments.payment}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+            <Grid item md={12} lg={12} xs={12}>
+              <h3 className="viewPatient__breakdownText">Payment History</h3>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }}>
+                  <TableHead className="viewPatient__tableHead">
+                    <TableRow>
+                      <TableCell className="viewPatient__tableCell">
+                        Date Paid
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className="viewPatient__tableCell"
+                      >
+                        Check Number
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className="viewPatient__tableCell"
+                      >
+                        Amount
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className="viewPatient__tableCell"
+                      >
+                        Process By
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {breakdowns2?.map((val) => (
+                      <>
+                        <TableRow
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                          key={val.id}
+                        >
+                          <TableCell align="center">{val.date_paid}</TableCell>
+                          <TableCell align="center">
+                            {val.check_number}
+                          </TableCell>
+                          <TableCell align="center">{val.amount}</TableCell>
+                          <TableCell align="center">{val.process_by}</TableCell>
+                        </TableRow>
+                      </>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -594,7 +757,7 @@ function ViewPatient() {
                     <TableBody>
                       {filterTransactions()
                         ?.filter((val) => {
-                          if (searchDate === "") {
+                          if (searchDate === null) {
                             return val;
                           } else if (val.date.includes(searchDate)) {
                             return val;
@@ -644,11 +807,11 @@ function ViewPatient() {
                                       variant="contained"
                                       color="success"
                                       className="patients__button"
-                                      // onClick={() =>
-                                      //   handleShowBreakdown(val.id)
-                                      // }
+                                      onClick={() =>
+                                        handleShowBreakdown2(val.id)
+                                      }
                                     >
-                                      Details2
+                                      Details
                                     </Button>
                                   )}
                                 </TableCell>
@@ -722,109 +885,99 @@ function ViewPatient() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {transactions
-                        ?.filter((val) => {
-                          if (searchDate === "") {
-                            return val;
-                          } else if (val.date.includes(searchDate)) {
-                            return val;
-                          }
-                        })
-                        .map((val) => (
-                          <>
-                            {val.balance !== 0 ? (
-                              <TableRow
-                                sx={{
-                                  "&:last-child td, &:last-child th": {
-                                    border: 0,
-                                  },
-                                }}
-                                key={val.id}
-                              >
-                                {val.balance !== 0 ? (
-                                  <TableCell component="th" scope="row">
-                                    {val.date}
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
+                      {filterTransactions()?.map((val) => (
+                        <>
+                          {val.balance !== 0 ? (
+                            <TableRow
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                              key={val.id}
+                            >
+                              {val.balance !== 0 ? (
+                                <TableCell component="th" scope="row">
+                                  {val.date}
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
 
-                                {val.balance !== 0 ? (
-                                  <TableCell
-                                    align="center"
-                                    component="th"
-                                    scope="row"
+                              {val.balance !== 0 ? (
+                                <TableCell
+                                  align="center"
+                                  component="th"
+                                  scope="row"
+                                >
+                                  {val.description.name}
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                              {val.balance !== 0 ? (
+                                <TableCell align="center">
+                                  {val.check_number ? val.check_number : "N/A"}
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                              {val.balance !== 0 ? (
+                                <TableCell align="center">
+                                  {numberWithCommas(val.discount)}
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                              {val.balance !== 0 ? (
+                                <TableCell align="center">
+                                  {numberWithCommas(val.amount)}
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+
+                              {val.balance !== 0 ? (
+                                <TableCell align="center">
+                                  {numberWithCommas(val.payment)}
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                              {val.balance !== 0 ? (
+                                <TableCell align="center">
+                                  {numberWithCommas(val.balance)}
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                              {val.balance !== 0 ? (
+                                <TableCell align="center">
+                                  {numberWithCommas(val.process_by)}
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                              {val.balance !== 0 ? (
+                                <TableCell align="center">
+                                  <Button
+                                    variant="contained"
+                                    color="success"
+                                    className="patients__button"
+                                    onClick={() => getUpdateBalance(val.id)}
                                   >
-                                    {val.description.name}
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
-                                {val.balance !== 0 ? (
-                                  <TableCell align="center">
-                                    {val.check_number
-                                      ? val.check_number
-                                      : "N/A"}
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
-                                {val.balance !== 0 ? (
-                                  <TableCell align="center">
-                                    {numberWithCommas(val.discount)}
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
-                                {val.balance !== 0 ? (
-                                  <TableCell align="center">
-                                    {numberWithCommas(val.amount)}
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
-
-                                {val.balance !== 0 ? (
-                                  <TableCell align="center">
-                                    {numberWithCommas(val.payment)}
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
-                                {val.balance !== 0 ? (
-                                  <TableCell align="center">
-                                    {numberWithCommas(val.balance)}
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
-                                {val.balance !== 0 ? (
-                                  <TableCell align="center">
-                                    {numberWithCommas(val.process_by)}
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
-                                {val.balance !== 0 ? (
-                                  <TableCell align="center">
-                                    <Button
-                                      variant="contained"
-                                      color="success"
-                                      className="patients__button"
-                                      onClick={() => getUpdateBalance(val.id)}
-                                    >
-                                      Update
-                                    </Button>
-                                  </TableCell>
-                                ) : (
-                                  ""
-                                )}
-                              </TableRow>
-                            ) : (
-                              ""
-                            )}
-                          </>
-                        ))}
+                                    Update
+                                  </Button>
+                                </TableCell>
+                              ) : (
+                                ""
+                              )}
+                            </TableRow>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
