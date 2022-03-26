@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .serializers import PatientSerializer, TreatmentSerializer, PatientAppointmentSerializer, ProcessPaymentsSerializer
-from .models import Patient, Treatment, PatientAppointment, ProcessPayments
+from .serializers import PatientSerializer, TreatmentSerializer, PatientAppointmentSerializer, ProcessPaymentsSerializer, PaymentsBreakdownSerializer
+from .models import Patient, Treatment, PatientAppointment, ProcessPayments, PaymentsBreakdown
 from django.views import View
 from django.http import HttpResponse, HttpResponseNotFound
 import os
@@ -84,9 +84,65 @@ class ProcessPaymentsViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         app_data = request.data
-        process_payment = ProcessPayments.objects.create(patient=Patient.objects.get(id=app_data["patient"]),description=Treatment.objects.get(id=app_data["description"]),date=app_data["date"],check_number=app_data['check_number'],amount=app_data['amount'],discount=app_data['discount'],payment=app_data['payment'],balance=app_data['balance'])
+        process_payment = ProcessPayments.objects.create(patient=Patient.objects.get(id=app_data["patient"]),description=Treatment.objects.get(id=app_data["description"]),date=app_data["date"],check_number=app_data['check_number'],amount=app_data['amount'],discount=app_data['discount'],payment=app_data['payment'],balance=app_data['balance'],process_by=app_data['process_by'],is_paid_within_the_day=app_data['is_paid_within_the_day'])
 
         process_payment.save()
 
         serializer = ProcessPaymentsSerializer(process_payment)
         return Response(serializer.data)
+
+    def update(self,request,*args,**kwargs):
+        paymentsObject = self.get_object()
+        data = request.data
+
+        # patient = Patient.objects.get(id=data['patient'])
+        # appointmentsObject.patient = patient 
+
+        # description = Treatment.objects.get(id=data['description'])
+        # appointmentsObject.description = description
+
+        # appointmentsObject.date_appointed = data['date_appointed']
+        paymentsObject.balance = data['balance']
+
+        paymentsObject.save()
+
+        serializer = ProcessPaymentsSerializer(paymentsObject)
+
+        return Response(serializer.data)
+
+# Payments Breakdown Viewset
+class PaymentsBreakdownViewSet(viewsets.ModelViewSet):
+    serializer_class = PaymentsBreakdownSerializer
+
+    def get_queryset(self):
+        breakdown = PaymentsBreakdown.objects.all().order_by("-date_paid")
+        return breakdown
+
+
+    def create(self, request, *args, **kwargs):
+        app_data = request.data
+        breakdown = PaymentsBreakdown.objects.create(process_payments=ProcessPayments.objects.get(id=app_data["process_payments"]),date_paid=app_data["date_paid"],check_number=app_data['check_number'],amount=app_data['amount'],process_by=app_data['process_by'])
+
+        breakdown.save()
+
+        serializer = PaymentsBreakdownSerializer(breakdown)
+        return Response(serializer.data)
+
+    # def update(self,request,*args,**kwargs):
+    #     paymentsObject = self.get_object()
+    #     data = request.data
+
+    #     # patient = Patient.objects.get(id=data['patient'])
+    #     # appointmentsObject.patient = patient 
+
+    #     # description = Treatment.objects.get(id=data['description'])
+    #     # appointmentsObject.description = description
+
+    #     # appointmentsObject.date_appointed = data['date_appointed']
+    #     paymentsObject.balance = data['balance']
+
+    #     paymentsObject.save()
+
+    #     serializer = ProcessPaymentsSerializer(paymentsObject)
+
+    #     return Response(serializer.data)

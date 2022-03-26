@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
         
 
         
-        fields = ['id','is_superuser','is_secretary','email','first_name','last_name','last_login','password']
+        fields = ['id','is_superuser','is_secretary','email','first_name','middle_name','last_name','last_login','password']
        
 
 class UserAccountPasswordAndEmailSerializer(serializers.ModelSerializer):

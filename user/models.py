@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name,  password=None):
+    def create_user(self, email, first_name,middle_name, last_name,  password=None):
 
         if not email:
             raise ValueError('Users must have an email')
@@ -15,6 +15,7 @@ class UserAccountManager(BaseUserManager):
         user = self.model(
             email = email,
             first_name = first_name,
+            middle_name= middle_name,
             last_name = last_name
         )
 
@@ -23,9 +24,9 @@ class UserAccountManager(BaseUserManager):
 
         return user
 
-    def create_secretary(self, email, first_name, last_name, password=None):
+    def create_secretary(self, email, first_name,middle_name, last_name, password=None):
 
-        user = self.create_user(email, first_name, last_name, password)
+        user = self.create_user(email, first_name, middle_name,last_name, password)
 
         user.is_secretary = True
 
@@ -34,9 +35,9 @@ class UserAccountManager(BaseUserManager):
         return user
 
 
-    def create_superuser(self, email, first_name, last_name, password=None):
+    def create_superuser(self, email, first_name,middle_name, last_name, password=None):
 
-        user = self.create_user(email, first_name, last_name, password)
+        user = self.create_user(email, first_name, middle_name,last_name, password)
 
         user.is_superuser = True
         user.is_staff = True
@@ -52,6 +53,7 @@ class UserAccountManager(BaseUserManager):
 class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, max_length=255)
     first_name = models.CharField(max_length=255)
+    middle_name = models.CharField(max_length=255,default="")
     last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

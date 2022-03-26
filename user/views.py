@@ -31,6 +31,7 @@ class RegisterView(APIView):
         data = request.data 
 
         first_name = data['first_name']
+        middle_name = data['middle_name']
         last_name = data['last_name']
         email = data['email']
         email = email.lower()
@@ -50,11 +51,11 @@ class RegisterView(APIView):
             if len(password) >= 8:
                 if not User.objects.filter(email=email).exists():
                     if not is_secretary:
-                        User.objects.create_superuser(first_name=first_name, last_name=last_name, email=email, password=password)
+                        User.objects.create_superuser(first_name=first_name, middle_name=middle_name,last_name=last_name, email=email, password=password)
                        
                         return Response({'success': 'User Admin Created Successful'}, status=status.HTTP_201_CREATED)
                     else:
-                        User.objects.create_secretary(first_name=first_name,last_name=last_name, email=email, password=password)
+                        User.objects.create_secretary(first_name=first_name,middle_name=middle_name,last_name=last_name, email=email, password=password)
                         
                       
                         return Response({'success': 'Secretary User created successful'}, status=status.HTTP_201_CREATED)

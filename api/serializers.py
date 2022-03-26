@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Patient,Treatment,PatientAppointment, ProcessPayments
+from .models import Patient,Treatment,PatientAppointment, ProcessPayments,PaymentsBreakdown
 
 
 class PatientSerializer(serializers.ModelSerializer):
@@ -30,5 +30,12 @@ class PatientAppointmentSerializer(serializers.ModelSerializer):
 class ProcessPaymentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessPayments
+        fields = '__all__'
+        depth = 2
+
+
+class PaymentsBreakdownSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentsBreakdown
         fields = '__all__'
         depth = 2
