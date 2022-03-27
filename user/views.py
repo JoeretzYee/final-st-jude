@@ -9,10 +9,12 @@ from .serializers import UserSerializer, UserAccountPasswordAndEmailSerializer
 from .models import UserAccountPasswordAndEmail
 from django.views import View
 from django.http import HttpResponse, HttpResponseNotFound
+from django.views.decorators.csrf import csrf_exempt 
 import os
 
 User = get_user_model()
 
+@csrf_exempt
 class Assets(View):
 
     def get(self, _request, filename):
@@ -24,6 +26,7 @@ class Assets(View):
         else:
             return HttpResponseNotFound()
 
+@csrf_exempt
 class RegisterView(APIView):
     permission_classes = (permissions.AllowAny,)
    
@@ -70,6 +73,8 @@ class RegisterView(APIView):
             return Response({'error': 'Password does not Match'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+@csrf_exempt
 class RetrieveUserView(APIView):
     permission_classes = (permissions.AllowAny,)
     def get(self,request, format=None):
@@ -85,6 +90,8 @@ class RetrieveUserView(APIView):
             },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+
+@csrf_exempt
 class  RetrieveAllUsers(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     serializer_class = UserSerializer
@@ -94,7 +101,7 @@ class  RetrieveAllUsers(viewsets.ModelViewSet):
         return patients
 
     
-
+@csrf_exempt
 class UserAccountEmailAndPasswordViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     serializer_class = UserAccountPasswordAndEmailSerializer
