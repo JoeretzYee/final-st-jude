@@ -35,7 +35,7 @@ function Login() {
     return cookieValue;
   }
 
-  let csrftoken = getCookie("csrftoken");
+  const [csrftoken, setcsrtoken] = useState(getCookie("csrftoken"));
 
   useEffect(() => {
     axios.get("/auth/users/").then((res) => {
