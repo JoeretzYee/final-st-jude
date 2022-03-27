@@ -63,8 +63,7 @@ function Login() {
           "/api/v1/token/login/",
           {
             headers: {
-              xsrfCookieName: "csrftoken",
-              xsrfHeaderName: "X-CSRFToken",
+              "X-CSRFToken": csrftoken,
             },
           },
           {
