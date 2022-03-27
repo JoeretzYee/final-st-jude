@@ -14,7 +14,7 @@ import os
 
 User = get_user_model()
 
-@csrf_exempt
+
 class Assets(View):
 
     def get(self, _request, filename):
@@ -26,7 +26,7 @@ class Assets(View):
         else:
             return HttpResponseNotFound()
 
-@csrf_exempt
+
 class RegisterView(APIView):
     permission_classes = (permissions.AllowAny,)
    
@@ -74,7 +74,7 @@ class RegisterView(APIView):
 
 
 
-@csrf_exempt
+
 class RetrieveUserView(APIView):
     permission_classes = (permissions.AllowAny,)
     def get(self,request, format=None):
@@ -91,7 +91,7 @@ class RetrieveUserView(APIView):
 
 
 
-@csrf_exempt
+
 class  RetrieveAllUsers(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     serializer_class = UserSerializer
@@ -101,7 +101,7 @@ class  RetrieveAllUsers(viewsets.ModelViewSet):
         return patients
 
     
-@csrf_exempt
+
 class UserAccountEmailAndPasswordViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     serializer_class = UserAccountPasswordAndEmailSerializer
