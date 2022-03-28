@@ -6,23 +6,7 @@ import { useDispatch } from "react-redux";
 import { setToken, setActiveUser } from "../features/userSlice";
 import "../css/Login.css";
 import swal from "sweetalert";
-
-//csrftoken function
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
+import csrftoken from "./csrftoken";
 
 function Login() {
   const dispatch = useDispatch();
@@ -36,8 +20,6 @@ function Login() {
       /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
     )
   );
-
-  const [csrftoken, setcsrtoken] = useState(getCookie("csrftoken"));
 
   useEffect(() => {
     axios.get("/auth/users/").then((res) => {
@@ -63,11 +45,7 @@ function Login() {
       axios
         .post(
           "/api/v1/token/login/",
-          {
-            headers: {
-              "X-CSRFToken": csrftoken,
-            },
-          },
+
           {
             email: email,
             password: password,
@@ -111,6 +89,7 @@ function Login() {
         <p className="login__error">{error}</p>
         <h1 className="login__h1">Login</h1>
         <form>
+          <csrftoken />
           <FormControl className="patients__info">
             <TextField
               id="outlined-basic"
