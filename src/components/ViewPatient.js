@@ -152,6 +152,7 @@ function ViewPatient() {
     }
     return [year, month, day].join("-");
   };
+  const [dateToday, setDateToday] = useState(DateToday());
   const [searchDate, setSearchDate] = useState(null);
 
   const theme = useTheme();
@@ -318,17 +319,30 @@ function ViewPatient() {
           <br />
           <Grid container spacing={2}>
             <Grid item md={12} xs={12}>
-              <FormControl className="patients__info">
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  type="date"
-                  className="patients__info"
-                  onChange={(e) => setDatePaid(e.target.value)}
-                  value={datePaid}
-                  helperText="Date Paid"
-                />
-              </FormControl>
+              {user?.is_secretary ? (
+                <FormControl className="patients__info">
+                  <TextField
+                    id="outlined-basic"
+                    variant="outlined"
+                    type="date"
+                    className="patients__info"
+                    value={dateToday}
+                    disabled={true}
+                  />
+                </FormControl>
+              ) : (
+                <FormControl className="patients__info">
+                  <TextField
+                    id="outlined-basic"
+                    variant="outlined"
+                    type="date"
+                    className="patients__info"
+                    onChange={(e) => setDatePaid(e.target.value)}
+                    value={datePaid}
+                    helperText="Date Paid"
+                  />
+                </FormControl>
+              )}
             </Grid>
             <Grid item md={12} xs={12}>
               <FormControl className="patients__info">

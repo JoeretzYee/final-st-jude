@@ -37,6 +37,22 @@ const style = {
   p: 4,
 };
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 function Patients() {
   const navigate = useNavigate();
   //modal for adding patient
@@ -64,7 +80,7 @@ function Patients() {
 
   // regex number for PH
   let numberPattern = /^(09|\+639)\d{9}$/gm;
-
+  console.log("csrftoken: ", getCookie("csrftoken"));
   //get all patients
   useEffect(() => {
     axios

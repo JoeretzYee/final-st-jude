@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { setToken, setActiveUser } from "../features/userSlice";
 import "../css/Login.css";
 import swal from "sweetalert";
-import csrftoken from "./csrftoken";
 
 function Login() {
   const dispatch = useDispatch();
@@ -43,14 +42,10 @@ function Login() {
       );
     } else {
       axios
-        .post(
-          "/api/v1/token/login/",
-
-          {
-            email: email,
-            password: password,
-          }
-        )
+        .post("/api/v1/token/login/", {
+          email: email,
+          password: password,
+        })
         .then((res) => {
           console.log(res.data);
           dispatch(
@@ -89,7 +84,6 @@ function Login() {
         <p className="login__error">{error}</p>
         <h1 className="login__h1">Login</h1>
         <form>
-          <csrftoken />
           <FormControl className="patients__info">
             <TextField
               id="outlined-basic"

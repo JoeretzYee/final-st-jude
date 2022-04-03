@@ -110,11 +110,23 @@ function ProcessPayments() {
     return amount - discount;
   };
 
-  const automaticBalance = (amount, payment, discount) => {
-    return parseInt(amount - payment - discount);
-  };
-
   const [balance, setBalance] = useState(0);
+
+  const automaticBalance = (amount, payment, discount) => {
+    let amountt = amount;
+    let paymentt = payment;
+    let discountt = discount;
+    let total = 0;
+    if (paymentt >= amountt) {
+      total = 0;
+    } else {
+      total = amountt - paymentt - discountt;
+    }
+
+    return total;
+
+    // return parseInt(amount - payment - discount);
+  };
 
   const handleProcessPayment = (e) => {
     e.preventDefault();
@@ -289,6 +301,7 @@ function ProcessPayments() {
               type="number"
               className="patients__info"
               onChange={(e) => setBalance(e.target.value)}
+              min="0"
               value={automaticBalance(amount, payment, discount)}
               required
               helperText="Balance"
