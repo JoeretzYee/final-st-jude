@@ -399,7 +399,7 @@ function Patients() {
       </Modal>
       {/* End of Modal */}
       <Grid container spacing={4} className="patients__gridForTable">
-        <Grid item md={6} xs={12}>
+        <Grid item md={6} xs={12} sm={12}>
           <TextField
             id="outlined-basic"
             label="Search Patient"
@@ -408,7 +408,7 @@ function Patients() {
             onChange={(e) => setSearchItem(e.target.value)}
           />
         </Grid>
-        <Grid item md={6} xs={12} className="patients__buttonContainer">
+        <Grid item md={6} xs={12} sm={12} className="patients__buttonContainer">
           <Button
             variant="contained"
             className="patients__button"

@@ -225,6 +225,7 @@ function ViewPatient() {
           },
         })
         .then((res) => {
+          console.log("test: ", res.data);
           setBalance(res.data.balance);
           setBalanceId(res.data.id);
           setOpen(true);
@@ -233,6 +234,12 @@ function ViewPatient() {
   };
 
   const calculateBalance = (balance, amount) => {
+    let balancee = balance;
+    let amountt = amount;
+    let total = balancee - amountt;
+    if (total < 0) {
+      return 0;
+    }
     return parseInt(balance - amount);
   };
 
@@ -244,36 +251,42 @@ function ViewPatient() {
     const form = {
       balance: calculateBalance(balance, amount),
     };
-    if (id) {
-      axios
-        .put(`/api/payments/${id}/`, form, {
-          headers: {
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        })
-        .then((res) => {
-          const form = {
-            process_payments: id,
-            date_paid: datePaid,
-            check_number: checkNumber,
-            amount: amount,
-            process_by: user.email,
-          };
+    if (datePaid === "") {
+      swal("Error", "Date Required");
+    } else if (amount === 0) {
+      swal("Error", "Amount Required");
+    } else {
+      if (id) {
+        axios
+          .put(`/api/payments/${id}/`, form, {
+            headers: {
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((res) => {
+            const form = {
+              process_payments: id,
+              date_paid: datePaid,
+              check_number: checkNumber,
+              amount: amount,
+              process_by: user.email,
+            };
 
-          axios
-            .post(`/api/breakdowns/`, form, {
-              headers: {
-                Authorization: `Token ${localStorage.getItem("token")}`,
-              },
-            })
-            .then((res) => {
-              swal("Success", `Update Balance Successful`, "success").then(
-                setTimeout(() => {
-                  window.location.reload(false);
-                }, 1000)
-              );
-            });
-        });
+            axios
+              .post(`/api/breakdowns/`, form, {
+                headers: {
+                  Authorization: `Token ${localStorage.getItem("token")}`,
+                },
+              })
+              .then((res) => {
+                swal("Success", `Update Balance Successful`, "success").then(
+                  setTimeout(() => {
+                    window.location.reload(false);
+                  }, 1000)
+                );
+              });
+          });
+      }
     }
   };
 
@@ -344,7 +357,7 @@ function ViewPatient() {
                 </FormControl>
               )}
             </Grid>
-            <Grid item md={12} xs={12}>
+            {/* <Grid item md={12} xs={12}>
               <FormControl className="patients__info">
                 <TextField
                   id="outlined-basic"
@@ -356,7 +369,7 @@ function ViewPatient() {
                   value={checkNumber}
                 />
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid item md={12} xs={12}>
               <FormControl className="patients__info">
                 <TextField
@@ -367,6 +380,19 @@ function ViewPatient() {
                   className="patients__info"
                   onChange={(e) => setAmount(e.target.value)}
                   value={amount}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <FormControl className="patients__info">
+                <TextField
+                  id="outlined-basic"
+                  label="Balance"
+                  variant="outlined"
+                  type="number"
+                  className="patients__info"
+                  onChange={(e) => setBalance(e.target.value)}
+                  value={calculateBalance(balance, amount)}
                 />
               </FormControl>
             </Grid>
@@ -873,7 +899,7 @@ function ViewPatient() {
                           Amount
                         </TableCell>
                         <TableCell
-                          align="ricentertableCell"
+                          align="center"
                           className="viewPatient__tableCell"
                         >
                           Payment
@@ -893,6 +919,7 @@ function ViewPatient() {
                         <TableCell
                           align="center"
                           className="viewPatient__tableCell"
+                          colSpan={2}
                         >
                           Action
                         </TableCell>
@@ -917,7 +944,6 @@ function ViewPatient() {
                               ) : (
                                 ""
                               )}
-
                               {val.balance !== 0 ? (
                                 <TableCell
                                   align="center"
@@ -950,7 +976,6 @@ function ViewPatient() {
                               ) : (
                                 ""
                               )}
-
                               {val.balance !== 0 ? (
                                 <TableCell align="center">
                                   {numberWithCommas(val.payment)}
@@ -976,7 +1001,7 @@ function ViewPatient() {
                                 <TableCell align="center">
                                   <Button
                                     variant="contained"
-                                    color="success"
+                                    color="primary"
                                     className="patients__button"
                                     onClick={() => getUpdateBalance(val.id)}
                                   >
@@ -985,7 +1010,16 @@ function ViewPatient() {
                                 </TableCell>
                               ) : (
                                 ""
-                              )}
+                              )}{" "}
+                              &nbsp;
+                              <Button
+                                variant="contained"
+                                color="success"
+                                className="viewPatient__balanceDetailsButton"
+                                onClick={() => handleShowBreakdown2(val.id)}
+                              >
+                                Details
+                              </Button>
                             </TableRow>
                           ) : (
                             ""

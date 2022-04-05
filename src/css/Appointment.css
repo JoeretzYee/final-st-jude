@@ -1,42 +1,42 @@
-.patients__input {
+.appointments__input {
   width: 100%;
 }
 
-.patients__buttonContainer {
+.appointments__buttonContainer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.patients__button {
+.appointments__button {
   text-transform: inherit !important;
 }
 
-.patients__info {
+.appointments__info {
   width: 100%;
   margin-bottom: 10px !important;
 }
 
-.patients__modalButton {
+.appointments__modalButton {
   width: 100%;
   text-transform: inherit !important;
 }
 
-.patients__gridForTable {
+.appointments__gridForTable {
   overflow: hidden !important;
 }
 
-.patients__gridForTable::-webkit-scrollbar {
+.appointments__gridForTable::-webkit-scrollbar {
   display: none !important;
 }
 
 @media only screen and (max-width: 900px) {
-  .patients__box {
+  .appointments__box {
     height: 400px !important;
     width: 400px !important;
     overflow: scroll;
   }
-  .patients__button {
+  .appointments__button {
     margin-bottom: 10px !important;
   }
 }

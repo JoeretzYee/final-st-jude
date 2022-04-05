@@ -195,14 +195,14 @@ function Appointments() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="patients__box">
+        <Box sx={style} className="appointments__box">
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add Appointment
           </Typography>
           <br />
           <Grid container spacing={2}>
             <Grid item md={12} xs={12}>
-              <FormControl className="patients__info">
+              <FormControl className="appointments__info">
                 <Select
                   label="Select Patients"
                   options={patientsOptions}
@@ -211,12 +211,12 @@ function Appointments() {
               </FormControl>
             </Grid>
             <Grid item md={12} xs={12}>
-              <FormControl className="patients__info">
+              <FormControl className="appointments__info">
                 <TextField
                   id="outlined-basic"
                   type="date"
                   variant="outlined"
-                  className="patients__info"
+                  className="appointments__info"
                   onChange={(e) => setDateAppointed(e.target.value)}
                   value={dateAppointed}
                   required
@@ -224,7 +224,7 @@ function Appointments() {
               </FormControl>
             </Grid>
             <Grid item md={12} xs={12}>
-              <FormControl className="patients__info">
+              <FormControl className="appointments__info">
                 <Select
                   options={treatmentsOptions}
                   onChange={(e) => setDescription(e.value)}
@@ -236,7 +236,7 @@ function Appointments() {
           <Button
             onClick={handleAddTreatment}
             variant="contained"
-            className="patients__modalButton"
+            className="appointments__modalButton"
           >
             Add
           </Button>
@@ -244,21 +244,21 @@ function Appointments() {
       </Modal>
       {/* End of Modal */}
 
-      <Grid container spacing={4} className="patients__gridForTable">
+      <Grid container spacing={4} className="appointments__gridForTable">
         <Grid item md={6} xs={12}>
           <TextField
             type="date"
             id="outlined-basic"
             variant="outlined"
-            className="patients__input"
+            className="appointments__input"
             onChange={(e) => setSearchDate(e.target.value)}
             value={searchDate}
           />
         </Grid>
-        <Grid item md={6} xs={12} className="patients__buttonContainer">
+        <Grid item md={6} xs={12} className="appointments__buttonContainer">
           <Button
             variant="contained"
-            className="patients__button"
+            className="appointments__button"
             onClick={handleOpen}
           >
             Add Appointment
@@ -311,7 +311,7 @@ function Appointments() {
                               <Button
                                 variant="contained"
                                 color="success"
-                                className="patients__button "
+                                className="appointments__button "
                                 onClick={() => handleDoneButton(val.id)}
                               >
                                 Done
@@ -324,7 +324,7 @@ function Appointments() {
                               <Button
                                 variant="contained"
                                 color="warning"
-                                className="patients__button"
+                                className="appointments__button"
                                 onClick={() => handleCancelAppointment(val.id)}
                               >
                                 Cancel
@@ -333,7 +333,7 @@ function Appointments() {
                               <Button
                                 variant="contained"
                                 color="warning"
-                                className="patients__button"
+                                className="appointments__button"
                                 onClick={() =>
                                   navigate(`/view-patient/:${val.id}`)
                                 }
@@ -377,7 +377,7 @@ function Appointments() {
                               <Button
                                 variant="contained"
                                 color="success"
-                                className="patients__button "
+                                className="appointments__button "
                                 onClick={() => handleDoneButton(val.id)}
                               >
                                 Done
@@ -390,7 +390,7 @@ function Appointments() {
                               <Button
                                 variant="contained"
                                 color="warning"
-                                className="patients__button"
+                                className="appointments__button"
                                 onClick={() => handleCancelAppointment(val.id)}
                               >
                                 Cancel
@@ -399,7 +399,7 @@ function Appointments() {
                               <Button
                                 variant="contained"
                                 color="success"
-                                className="patients__button"
+                                className="appointments__button"
                                 onClick={() =>
                                   navigate(`/view-patient/:${val.id}`)
                                 }

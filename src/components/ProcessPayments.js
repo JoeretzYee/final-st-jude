@@ -116,13 +116,10 @@ function ProcessPayments() {
     let amountt = amount;
     let paymentt = payment;
     let discountt = discount;
-    let total = 0;
-    if (paymentt >= amountt) {
-      total = 0;
-    } else {
-      total = amountt - paymentt - discountt;
+    let total = amountt - discountt - paymentt;
+    if (total < 0) {
+      return 0;
     }
-
     return total;
 
     // return parseInt(amount - payment - discount);

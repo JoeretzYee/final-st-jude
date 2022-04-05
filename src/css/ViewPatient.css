@@ -30,3 +30,8 @@
 .viewPatient__breakdownText {
   text-align: center !important;
 }
+
+.viewPatient__balanceDetailsButton {
+  margin-top: 15px !important;
+  text-transform: inherit !important;
+}
