@@ -44,7 +44,7 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
 
     def create(self,request,*args,**kwargs):
         app_data = request.data 
-        new_appointment = PatientAppointment.objects.create(date_appointed=app_data["date_appointed"],description=Treatment.objects.get(id=app_data["description"]),patient=Patient.objects.get(id=app_data["patient"]),status=app_data['status'])
+        new_appointment = PatientAppointment.objects.create(date_appointed=app_data["date_appointed"],description=Treatment.objects.get(id=app_data["description"]),patient=Patient.objects.get(id=app_data["patient"]),status=app_data['status'],donePayment=app_data['donePayment'])
 
         new_appointment.save()
 
@@ -64,6 +64,7 @@ class PatientAppointmentViewSet(viewsets.ModelViewSet):
 
         # appointmentsObject.date_appointed = data['date_appointed']
         appointmentsObject.status = data['status']
+        appointmentsObject.donePayment = data['donePayment']
 
         appointmentsObject.save()
 

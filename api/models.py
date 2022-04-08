@@ -28,6 +28,7 @@ class PatientAppointment(models.Model):
     date_appointed = models.DateField(auto_now_add=False, auto_now=False, blank=False, null=False)
     description = models.ForeignKey(Treatment, on_delete=models.CASCADE,related_name='patient_treatment')
     status = models.BooleanField(default=False)
+    donePayment = models.BooleanField(default=False)
     def __str__(self):
         return self.patient.first_name
 

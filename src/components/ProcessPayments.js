@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 // redux
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import { AutoFixOffSharp } from "@mui/icons-material";
 
 function ProcessPayments() {
   const user = useSelector(selectUser);
@@ -48,6 +49,7 @@ function ProcessPayments() {
   const [patients, setPatients] = useState([]);
   const [patient, setPatient] = useState("");
   const [appointments, setAppointments] = useState([]);
+  const [treatmentId, setTreatmentId] = useState("");
 
   // options for select
   let patientsOptions = patients.map((patient) => ({
@@ -56,6 +58,7 @@ function ProcessPayments() {
   }));
 
   useEffect(() => {
+    // get all patients
     axios
       .get("/api/patients", {
         headers: {
@@ -65,7 +68,7 @@ function ProcessPayments() {
       .then((res) => {
         setPatients(res.data);
       });
-
+    // get all appointments
     axios
       .get("/api/appointments", {
         headers: {
@@ -75,7 +78,7 @@ function ProcessPayments() {
       .then((res) => {
         setAppointments(res.data);
       });
-
+    // get all treatments
     axios
       .get("/api/treatments", {
         headers: {
@@ -97,13 +100,20 @@ function ProcessPayments() {
 
   const allDoneAppointments = () => {
     return filterAppointments()?.filter((val) => {
-      return val.status === true;
+      // setTreatmentId(val.id);
+      let statuss = val.status;
+      let donePaymentt = val.donePayment;
+      if (statuss === true && donePaymentt === false) {
+        return val.status === true;
+      }
+      return null;
     });
   };
 
   let treatmentsOptions = allDoneAppointments()?.map((treatment) => ({
     value: treatment.description.id,
     label: treatment.description.name,
+    treatId: treatment.id,
   }));
 
   const automaticAmount = (discount) => {
@@ -161,11 +171,23 @@ function ProcessPayments() {
             }
           )
           .then((res) => {
-            swal("Success", `Process Payment Successful`, "success").then(
-              setTimeout(() => {
-                navigate(`/patients`);
-              }, 500)
-            );
+            axios
+              .put(
+                `/api/appointments/${treatmentId}/`,
+                { donePayment: true, status: true },
+                {
+                  headers: {
+                    Authorization: `Token ${localStorage.getItem("token")}`,
+                  },
+                }
+              )
+              .then((res2) => {
+                swal("Success", `Process Payment Successful`, "success").then(
+                  setTimeout(() => {
+                    navigate(`/patients`);
+                  }, 500)
+                );
+              });
           });
       } else {
         axios
@@ -190,11 +212,23 @@ function ProcessPayments() {
             }
           )
           .then((res) => {
-            swal("Success", `Process Payment Successful`, "success").then(
-              setTimeout(() => {
-                navigate(`/patients`);
-              }, 500)
-            );
+            axios
+              .put(
+                `/api/appointments/${treatmentId}/`,
+                { donePayment: true, status: true },
+                {
+                  headers: {
+                    Authorization: `Token ${localStorage.getItem("token")}`,
+                  },
+                }
+              )
+              .then((res2) => {
+                swal("Success", `Process Payment Successful`, "success").then(
+                  setTimeout(() => {
+                    navigate(`/patients`);
+                  }, 500)
+                );
+              });
           });
       }
     }
@@ -229,7 +263,10 @@ function ProcessPayments() {
             <Select
               label="Select Description"
               options={treatmentsOptions}
-              onChange={(e) => setDescription(e.value)}
+              onChange={(e) => {
+                setDescription(e.value);
+                setTreatmentId(e.treatId);
+              }}
             />
           </FormControl>
         </Grid>

@@ -177,7 +177,11 @@ const Dashboard = (props) => {
         </DrawerHeader>
         <Divider className="dashboard__divider" />
         <List className="dashboard__list">
-          <Link to="/patients" className="dashboard__links">
+          <Link
+            to="/patients"
+            onClick={() => window.location.reload(false)}
+            className="dashboard__links"
+          >
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
@@ -187,7 +191,11 @@ const Dashboard = (props) => {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link to="/appointments" className="dashboard__links">
+          <Link
+            to="/appointments"
+            onClick={() => window.location.reload(false)}
+            className="dashboard__links"
+          >
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
@@ -197,7 +205,11 @@ const Dashboard = (props) => {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link to="/treatments" className="dashboard__links">
+          <Link
+            to="/treatments"
+            onClick={() => window.location.reload(false)}
+            className="dashboard__links"
+          >
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
@@ -207,7 +219,11 @@ const Dashboard = (props) => {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link to="/process-payments" className="dashboard__links">
+          <Link
+            to="/process-payments"
+            onClick={() => window.location.reload(false)}
+            className="dashboard__links"
+          >
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
@@ -218,7 +234,11 @@ const Dashboard = (props) => {
             </ListItem>
           </Link>
           {user?.is_superuser ? (
-            <Link to="/sales" className="dashboard__links">
+            <Link
+              to="/sales"
+              onClick={() => window.location.reload(false)}
+              className="dashboard__links"
+            >
               <ListItem disablePadding className="dashboard__listItem">
                 <ListItemButton>
                   <ListItemIcon>
@@ -232,7 +252,11 @@ const Dashboard = (props) => {
             ""
           )}
 
-          <Link to="/generate-letter" className="dashboard__links">
+          <Link
+            to="/generate-letter"
+            onClick={() => window.location.reload(false)}
+            className="dashboard__links"
+          >
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
@@ -243,7 +267,11 @@ const Dashboard = (props) => {
             </ListItem>
           </Link>
           {user?.is_superuser ? (
-            <Link to="/create-secretary-account" className="dashboard__links">
+            <Link
+              to="/create-secretary-account"
+              onClick={() => window.location.reload(false)}
+              className="dashboard__links"
+            >
               <ListItem disablePadding className="dashboard__listItem">
                 <ListItemButton>
                   <ListItemIcon>

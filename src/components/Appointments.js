@@ -113,6 +113,7 @@ function Appointments() {
         patient: patient,
         description: description,
         status: false,
+        donePayment: false,
       };
 
       axios
@@ -152,6 +153,7 @@ function Appointments() {
   const handleDoneButton = (id) => {
     const form = {
       status: true,
+      donePayment: false,
     };
 
     axios
