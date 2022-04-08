@@ -177,74 +177,63 @@ const Dashboard = (props) => {
         </DrawerHeader>
         <Divider className="dashboard__divider" />
         <List className="dashboard__list">
-          <Link
-            to="/patients"
-            onClick={() => window.location.reload(false)}
-            className="dashboard__links"
-          >
+          <Link to="/patients" className="dashboard__links">
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
                   <PeopleIcon className="dashboard__icons" />
                 </ListItemIcon>
-                <ListItemText primary="Patients" />
+                <ListItemText primary="Patients" onClick={handleDrawerClose} />
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link
-            to="/appointments"
-            onClick={() => window.location.reload(false)}
-            className="dashboard__links"
-          >
+          <Link to="/appointments" className="dashboard__links">
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
                   <AssignmentIcon className="dashboard__icons" />
                 </ListItemIcon>
-                <ListItemText primary="Appointments" />
+                <ListItemText
+                  primary="Appointments"
+                  onClick={handleDrawerClose}
+                />
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link
-            to="/treatments"
-            onClick={() => window.location.reload(false)}
-            className="dashboard__links"
-          >
+          <Link to="/treatments" className="dashboard__links">
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
                   <HealingIcon className="dashboard__icons" />
                 </ListItemIcon>
-                <ListItemText primary="Treatments" />
+                <ListItemText
+                  primary="Treatments"
+                  onClick={handleDrawerClose}
+                />
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link
-            to="/process-payments"
-            onClick={() => window.location.reload(false)}
-            className="dashboard__links"
-          >
+          <Link to="/process-payments" className="dashboard__links">
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
                   <CreditCardIcon className="dashboard__icons" />
                 </ListItemIcon>
-                <ListItemText primary="Process Payments" />
+                <ListItemText
+                  primary="Process Payments"
+                  onClick={handleDrawerClose}
+                />
               </ListItemButton>
             </ListItem>
           </Link>
           {user?.is_superuser ? (
-            <Link
-              to="/sales"
-              onClick={() => window.location.reload(false)}
-              className="dashboard__links"
-            >
+            <Link to="/sales" className="dashboard__links">
               <ListItem disablePadding className="dashboard__listItem">
                 <ListItemButton>
                   <ListItemIcon>
                     <AttachMoneyIcon className="dashboard__icons" />
                   </ListItemIcon>
-                  <ListItemText primary="Sales" />
+                  <ListItemText primary="Sales" onClick={handleDrawerClose} />
                 </ListItemButton>
               </ListItem>
             </Link>
@@ -252,32 +241,30 @@ const Dashboard = (props) => {
             ""
           )}
 
-          <Link
-            to="/generate-letter"
-            onClick={() => window.location.reload(false)}
-            className="dashboard__links"
-          >
+          <Link to="/generate-letter" className="dashboard__links">
             <ListItem disablePadding className="dashboard__listItem">
               <ListItemButton>
                 <ListItemIcon>
                   <PrintIcon className="dashboard__icons" />
                 </ListItemIcon>
-                <ListItemText primary="Generate Letter" />
+                <ListItemText
+                  primary="Generate Letter"
+                  onClick={handleDrawerClose}
+                />
               </ListItemButton>
             </ListItem>
           </Link>
           {user?.is_superuser ? (
-            <Link
-              to="/create-secretary-account"
-              onClick={() => window.location.reload(false)}
-              className="dashboard__links"
-            >
+            <Link to="/create-secretary-account" className="dashboard__links">
               <ListItem disablePadding className="dashboard__listItem">
                 <ListItemButton>
                   <ListItemIcon>
                     <AddIcon className="dashboard__icons" />
                   </ListItemIcon>
-                  <ListItemText primary="Create Secretary Account" />
+                  <ListItemText
+                    primary="Create Secretary Account"
+                    onClick={handleDrawerClose}
+                  />
                 </ListItemButton>
               </ListItem>
             </Link>
