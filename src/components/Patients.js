@@ -419,7 +419,7 @@ function Patients() {
         </Grid>
         <Grid item md={12} xs={12}>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: "100%" }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>

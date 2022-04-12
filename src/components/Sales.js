@@ -106,7 +106,7 @@ function Sales() {
           Total Sales: ₱{numberWithCommas(totalEarn1() + totalEarn2())}
         </h1>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }}>
+          <Table sx={{ minWidth: "100%" }}>
             <TableHead className="viewPatient__tableHead">
               <TableRow>
                 <TableCell align="center" className="viewPatient__tableCell">

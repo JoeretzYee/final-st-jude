@@ -26,9 +26,9 @@
   overflow: hidden !important;
 }
 
-.patients__gridForTable::-webkit-scrollbar {
+/* .patients__gridForTable::-webkit-scrollbar {
   display: none !important;
-}
+} */
 
 @media only screen and (max-width: 900px) {
   .patients__box {

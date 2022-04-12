@@ -23,6 +23,10 @@ import {
   Modal,
   TextField,
   Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -438,7 +442,7 @@ function ViewPatient() {
           <Grid container spacing={2}>
             <Grid item md={12} lg={12} xs={12}>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }}>
+                <Table sx={{ minWidth: "100%" }}>
                   <TableHead className="viewPatient__tableHead">
                     <TableRow>
                       <TableCell className="viewPatient__tableCell">
@@ -502,7 +506,7 @@ function ViewPatient() {
             <Grid item md={12} lg={12} xs={12}>
               <h3 className="viewPatient__breakdownText">Payment History</h3>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }}>
+                <Table sx={{ minWidth: "100%" }}>
                   <TableHead className="viewPatient__tableHead">
                     <TableRow>
                       <TableCell className="viewPatient__tableCell">
@@ -574,7 +578,7 @@ function ViewPatient() {
           <Grid container spacing={2}>
             <Grid item md={12} lg={12} xs={12}>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }}>
+                <Table sx={{ minWidth: "100%" }}>
                   <TableHead className="viewPatient__tableHead">
                     <TableRow>
                       <TableCell className="viewPatient__tableCell">
@@ -637,7 +641,7 @@ function ViewPatient() {
             <Grid item md={12} lg={12} xs={12}>
               <h3 className="viewPatient__breakdownText">Payment History</h3>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }}>
+                <Table sx={{ minWidth: "100%" }}>
                   <TableHead className="viewPatient__tableHead">
                     <TableRow>
                       <TableCell className="viewPatient__tableCell">
@@ -692,7 +696,7 @@ function ViewPatient() {
       <Grid container spacing={4}>
         <Grid item md={12} xs={12} lg={12} className="test">
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }}>
+            <Table sx={{ minWidth: "100%" }}>
               <TableHead className="viewPatient__tableHead">
                 <TableRow>
                   <TableCell className="viewPatient__tableCell">Name</TableCell>
@@ -771,7 +775,7 @@ function ViewPatient() {
                 </Grid>
 
                 <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }}>
+                  <Table sx={{ minWidth: "100%" }}>
                     <TableHead className="viewPatient__tableHead">
                       <TableRow>
                         <TableCell
@@ -868,7 +872,7 @@ function ViewPatient() {
               {/* Balances */}
               <TabPanel value={value} index={1} dir={theme.direction}>
                 <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }}>
+                  <Table sx={{ minWidth: "100%" }}>
                     <TableHead className="viewPatient__tableHead">
                       <TableRow>
                         <TableCell className="viewPatient__tableCell">

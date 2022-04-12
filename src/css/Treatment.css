@@ -1,39 +1,42 @@
-.patients__input {
+.treatments__input {
   width: 100%;
 }
 
-.patients__buttonContainer {
+.treatments__buttonContainer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.patients__button {
+.treatments__button {
   text-transform: inherit !important;
 }
 
-.patients__info {
+.treatments__info {
   width: 100%;
   margin-bottom: 10px !important;
 }
 
-.patients__modalButton {
+.treatments__modalButton {
   width: 100%;
   text-transform: inherit !important;
 }
 
-.patients__gridForTable {
+.treatments__gridForTable {
   overflow: hidden !important;
 }
 
-.patients__gridForTable::-webkit-scrollbar {
+.treatments__gridForTable::-webkit-scrollbar {
   display: none !important;
 }
 
 @media only screen and (max-width: 900px) {
-  .patients__box {
+  .treatments__box {
     height: 400px !important;
     width: 400px !important;
     overflow: scroll;
+  }
+  .treatments__button {
+    margin-bottom: 10px !important;
   }
 }

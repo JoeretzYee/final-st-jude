@@ -389,7 +389,7 @@ function CreateSecretaryAccount() {
                 <TableContainer component={Paper}>
                   <Table
                     className="createSecretaryAccount__table"
-                    sx={{ minWidth: 650 }}
+                    sx={{ minWidth: "100%" }}
                   >
                     <TableHead className="viewPatient__tableHead">
                       <TableRow>
@@ -443,7 +443,7 @@ function CreateSecretaryAccount() {
               </TabPanel>
               <TabPanel value={value} index={1} dir={theme.direction}>
                 <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }}>
+                  <Table sx={{ minWidth: "100%" }}>
                     <TableHead className="viewPatient__tableHead">
                       <TableRow>
                         <TableCell className="viewPatient__tableCell">

@@ -143,20 +143,20 @@ function Treatments() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="patients__box">
+        <Box sx={style} className="treatments__box">
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add Treatment
           </Typography>
           <br />
           <Grid container spacing={2}>
             <Grid item md={12} xs={12}>
-              <FormControl className="patients__info">
+              <FormControl className="treatments__info">
                 <TextField
                   id="outlined-basic"
                   label=" Name"
                   variant="outlined"
                   type="text"
-                  className="patients__info"
+                  className="treatments__info"
                   onChange={(e) => setName(e.target.value)}
                   value={name}
                   required
@@ -169,7 +169,7 @@ function Treatments() {
             type="button"
             onClick={handleAddTreatment}
             variant="contained"
-            className="patients__modalButton"
+            className="treatments__modalButton"
           >
             Add
           </Button>
@@ -184,20 +184,20 @@ function Treatments() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="patients__box">
+        <Box sx={style} className="treatments__box">
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Edit Treatment
           </Typography>
           <br />
           <Grid container spacing={2}>
             <Grid item md={12} xs={12}>
-              <FormControl className="patients__info">
+              <FormControl className="treatments__info">
                 <TextField
                   id="outlined-basic"
                   label=" Name"
                   variant="outlined"
                   type="text"
-                  className="patients__info"
+                  className="treatments__info"
                   onChange={(e) => setEditName(e.target.value)}
                   value={editName}
                   required
@@ -210,27 +210,27 @@ function Treatments() {
             type="button"
             onClick={() => handleEditTreatment(editName.id, editName.name)}
             variant="contained"
-            className="patients__modalButton"
+            className="treatments__modalButton"
           >
             Edit
           </Button>
         </Box>
       </Modal>
       {/* End of Modal for Edit Treatment */}
-      <Grid container spacing={4} className="patients__gridForTable">
+      <Grid container spacing={4} className="treatments__gridForTable">
         <Grid item md={6} xs={12}>
           <TextField
             id="outlined-basic"
             label="Search Treatment"
             variant="outlined"
-            className="patients__input"
+            className="treatments__input"
             onChange={(e) => setSearchItem(e.target.value)}
           />
         </Grid>
-        <Grid item md={6} xs={12} className="patients__buttonContainer">
+        <Grid item md={6} xs={12} className="treatments__buttonContainer">
           <Button
             variant="contained"
-            className="patients__button"
+            className="treatments__button"
             onClick={handleOpen}
           >
             Add Treatment
@@ -238,7 +238,7 @@ function Treatments() {
         </Grid>
         <Grid item md={12} xs={12}>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: "100%" }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
@@ -273,7 +273,7 @@ function Treatments() {
                           <Button
                             variant="contained"
                             color="success"
-                            className="patients__button"
+                            className="treatments__button"
                             onClick={() => handleEditName(val.id)}
                           >
                             Edit
@@ -282,7 +282,7 @@ function Treatments() {
                           <Button
                             variant="contained"
                             color="warning"
-                            className="patients__button"
+                            className="treatments__button"
                             onClick={() => handleDeleteTreatment(val.id)}
                           >
                             Delete
