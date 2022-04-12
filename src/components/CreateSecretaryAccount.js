@@ -4,8 +4,6 @@ import {
   Button,
   FormControl,
   Grid,
-  Input,
-  InputLabel,
   Paper,
   Table,
   TableBody,
@@ -14,6 +12,8 @@ import {
   TableHead,
   TableRow,
   TextField,
+  CssBaseline,
+  Container,
 } from "@mui/material";
 import Select from "react-select";
 import PropTypes from "prop-types";
@@ -270,102 +270,164 @@ function CreateSecretaryAccount() {
     }
   };
   return (
-    <>
-      <Grid container spacing={4}>
-        <Grid item md={6} xs={12} lg={6} sm={12}>
-          <h1>Create Account for Secretary</h1>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="First Name"
-              type="text"
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-              required
-            />
-          </FormControl>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="Middle Name"
-              type="text"
-              onChange={(e) => setMiddleName(e.target.value)}
-              value={middleName}
-              required
-            />
-          </FormControl>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="Last Name"
-              type="text"
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-              required
-            />
-          </FormControl>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="Email Address"
-              type="text"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              required
-            />
-          </FormControl>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="Password"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              required
-            />
-          </FormControl>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="Confirm Password"
-              type="password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              value={confirmPassword}
-              required
-            />
-          </FormControl>
-          <Button
-            onClick={handleSignup}
-            variant="contained"
-            className="createSecretaryAccount__createButton"
-          >
-            Create
-          </Button>
-        </Grid>
-        {/* Tabs */}
-        <Grid item md={6} xs={12} lg={6} sm={12}>
-          <FormControl className="patients__info">
-            <Select
-              label="Select Patients"
-              options={secretaryAccountsOptions}
-              onChange={(e) => setChangeToAdmin(e.value)}
-            />
-          </FormControl>
-          <Button
-            onClick={() => setToAdmin(changeToAdmin)}
-            color="success"
-            variant="contained"
-            className="createSecretaryAccount__setAdminButton"
-          >
-            Set to Admin
-          </Button>{" "}
-          <Box sx={{ bgcolor: "background.paper", width: 500 }} className="box">
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Grid container spacing={3}>
+          {/* Chart */}
+          <Grid item xs={12} md={8}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Typography component="h1" variant="h5">
+                    Create Secretary Account
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <FormControl className="patients__info">
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      label="First Name"
+                      type="text"
+                      onChange={(e) => setFirstName(e.target.value)}
+                      value={firstName}
+                      required
+                      size="small"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <FormControl className="patients__info">
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      label="Middle Name"
+                      type="text"
+                      onChange={(e) => setMiddleName(e.target.value)}
+                      value={middleName}
+                      required
+                      size="small"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <FormControl className="patients__info">
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      label="Last Name"
+                      type="text"
+                      onChange={(e) => setLastName(e.target.value)}
+                      value={lastName}
+                      required
+                      size="small"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl className="patients__info">
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      label="Email Address"
+                      type="text"
+                      onChange={(e) => setEmail(e.target.value)}
+                      value={email}
+                      required
+                      size="small"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl className="patients__info">
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      label="Password"
+                      type="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
+                      required
+                      size="small"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl className="patients__info">
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      label="Confirm Password"
+                      type="password"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      value={confirmPassword}
+                      required
+                      size="small"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    onClick={handleSignup}
+                    variant="contained"
+                    className="createSecretaryAccount__createButton"
+                  >
+                    Create
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          {/* Recent Deposits */}
+          <Grid item xs={12} md={4}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+                height: 314.52,
+              }}
+            >
+              <Grid container spacing={2}>
+              <Grid item xs={12}>
+                  <Typography component="h1" variant="h5">
+                    Promote Account
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl className="patients__info">
+                    <Select
+                      label="Select Patients"
+                      options={secretaryAccountsOptions}
+                      onChange={(e) => setChangeToAdmin(e.value)}
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    onClick={() => setToAdmin(changeToAdmin)}
+                    color="success"
+                    variant="contained"
+                    className="createSecretaryAccount__setAdminButton"
+                  >
+                    Set to Admin
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          {/* Recent Orders */}
+          <Grid item xs={12}>
+            <Paper
+              sx={{ p: 2, display: "flex", flexDirection: "column" }}
+            >
             <AppBar position="static">
               <Tabs
                 className="createSecretaryAccount__table"
@@ -494,10 +556,11 @@ function CreateSecretaryAccount() {
                 </TableContainer>
               </TabPanel>
             </SwipeableViews>
-          </Box>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-    </>
+      </Container>
+    </Box>
   );
 }
 

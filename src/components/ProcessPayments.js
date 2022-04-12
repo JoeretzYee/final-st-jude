@@ -7,6 +7,13 @@ import {
   Grid,
   TextField,
   FormHelperText,
+  Container,
+  CssBaseline,
+  Box,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Typography
 } from "@mui/material";
 import Select from "react-select";
 // axios
@@ -235,137 +242,143 @@ function ProcessPayments() {
   };
 
   return (
-    <>
-      <Grid container spacing={4}>
-        <Grid item md={6} xs={12}>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              type="date"
-              className="patients__info"
-              value={dateToday}
-              disabled={true}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <FormControl className="patients__info">
-            <Select
-              label="Select Patients"
-              options={patientsOptions}
-              onChange={(e) => setPatient(e.value)}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <FormControl className="patients__info">
-            <Select
-              label="Select Description"
-              options={treatmentsOptions}
-              onChange={(e) => {
-                setDescription(e.value);
-                setTreatmentId(e.treatId);
-              }}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="Check Number"
-              type="text"
-              className="patients__info"
-              onChange={(e) => setCheckNumber(e.target.value)}
-              value={checkNumber}
-              required
-            />
-          </FormControl>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              type="number"
-              className="patients__info"
-              onChange={(e) => setAmount(e.target.value)}
-              value={automaticAmount(discount)}
-              required
-              helperText="Amount"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item md={6} xs={12} lg={6}>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              type="number"
-              className="patients__info"
-              onChange={(e) => setDiscount(e.target.value)}
-              value={discount}
-              required
-              helperText="Discount"
-            />
-          </FormControl>
-        </Grid>
-
-        <Grid item md={12} xs={12}>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              type="number"
-              className="patients__info"
-              onChange={(e) => setPayment(e.target.value)}
-              value={payment}
-              required
-              helperText="Payment"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              type="number"
-              className="patients__info"
-              onChange={(e) => setBalance(e.target.value)}
-              min="0"
-              value={automaticBalance(amount, payment, discount)}
-              required
-              helperText="Balance"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <FormControl className="patients__info">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              type="text"
-              className="patients__info"
-              value={user?.email}
-              disabled={true}
-              helperText="Process By"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item md={12} xs={12}>
+    <Container component="main" maxWidth="md">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+         <Typography component="h1" variant="h5">
+            Process Payment
+          </Typography>
+        <Box noValidate sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <FormControl className="patients__info">
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  type="date"
+                  className="patients__info"
+                  value={dateToday}
+                  disabled={true}
+                  size="small"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl className="patients__info">
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  type="text"
+                  className="patients__info"
+                  value={user?.email}
+                  disabled={true}
+                  size="small"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl className="patients__info">
+                <Select
+                  label="Select Patients"
+                  options={patientsOptions}
+                  onChange={(e) => setPatient(e.value)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl className="patients__info">
+                <Select
+                  label="Select Description"
+                  options={treatmentsOptions}
+                  onChange={(e) => {
+                    setDescription(e.value);
+                    setTreatmentId(e.treatId);
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <FormControl className="patients__info">
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  type="number"
+                  // className="patients__info"
+                  onChange={(e) => setAmount(e.target.value)}
+                  value={automaticAmount(discount)}
+                  required
+                  helperText="Amount"
+                  size='small'
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <FormControl className="patients__info">
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  type="number"
+                  // className="patients__info"
+                  onChange={(e) => setPayment(e.target.value)}
+                  value={payment}
+                  required
+                  helperText="Payment"
+                  size='small'
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <FormControl className="patients__info">
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  type="number"
+                  // className="patients__info"
+                  onChange={(e) => setDiscount(e.target.value)}
+                  value={discount}
+                  required
+                  helperText="Discount"
+                  size='small'
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl className="patients__info">
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  type="number"
+                  // className="patients__info"
+                  onChange={(e) => setBalance(e.target.value)}
+                  min="0"
+                  value={automaticBalance(amount, payment, discount)}
+                  required
+                  helperText="Balance"
+                  size='small'
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
           <Button
             onClick={handleProcessPayment}
+            type="submit"
+            fullWidth
             variant="contained"
-            className="patients__modalButton"
+            sx={{ mt: 3, mb: 2 }}
           >
-            Process Payment
+            Submit
           </Button>
-        </Grid>
-      </Grid>
-    </>
+
+        </Box>
+      </Box>
+    </Container>
   );
 }
 
