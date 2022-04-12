@@ -17,6 +17,7 @@
   top: 60% !important;
   left: 7% !important;
   margin-right: 500px !important;
+  text-transform: inherit !important;
 }
 
 .generatePayment__inputButton {
@@ -24,6 +25,7 @@
   top: 50% !important;
   left: 7% !important;
   margin-right: 500px !important;
+  text-transform: inherit !important;
 }
 
 #form__container {
