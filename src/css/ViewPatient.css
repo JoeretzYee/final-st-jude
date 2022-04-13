@@ -31,7 +31,23 @@
   text-align: center !important;
 }
 
+.viewPatients__button {
+  text-transform: inherit !important;
+}
+
 .viewPatient__balanceDetailsButton {
   margin-top: 15px !important;
   text-transform: inherit !important;
+}
+
+/* @media screen and (max-width: 1500px) {
+  .viewPatient__balanceDetailsButton {
+    margin-top: -4px !important;
+  }
+} */
+
+@media screen and (max-width: 900px) {
+  .viewPatient__balanceDetailsButton {
+    margin-top: -5px !important;
+  }
 }
