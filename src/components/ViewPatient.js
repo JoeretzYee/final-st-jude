@@ -872,7 +872,7 @@ function ViewPatient() {
               {/* Balances */}
               <TabPanel value={value} index={1} dir={theme.direction}>
                 <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: "100%" }}>
+                  <Table sx={{ width: "100%" }}>
                     <TableHead className="viewPatient__tableHead">
                       <TableRow>
                         <TableCell className="viewPatient__tableCell">
@@ -1006,7 +1006,7 @@ function ViewPatient() {
                                   <Button
                                     variant="contained"
                                     color="primary"
-                                    className="patients__button"
+                                    className="viewPatients__button"
                                     onClick={() => getUpdateBalance(val.id)}
                                   >
                                     Update
